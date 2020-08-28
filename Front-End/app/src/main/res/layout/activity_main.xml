@@ -4,31 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2B2D42"
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/leaderboardButton"
         android:layout_width="252dp"
         android:layout_height="56dp"
+        android:backgroundTint="#F7EC59"
         android:text="Leaderboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintTop_toBottomOf="@+id/playButton"
+        app:layout_constraintVertical_bias="0.048" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/competeButton"
         android:layout_width="252dp"
         android:layout_height="56dp"
+        android:backgroundTint="#F7EC59"
         android:text="Compete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5"
-        app:layout_constraintVertical_bias="0.124" />
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardButton"
+        app:layout_constraintVertical_bias="0.087" />
 
     <ImageView
         android:id="@+id/logo"
@@ -43,16 +46,17 @@
         app:srcCompat="@drawable/circle" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/playButton"
         android:layout_width="252dp"
         android:layout_height="56dp"
         android:layout_marginTop="10dp"
+        android:backgroundTint="#F7EC59"
         android:text="Play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.282" />
+        app:layout_constraintVertical_bias="0.286" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
