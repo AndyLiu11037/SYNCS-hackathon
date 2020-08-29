@@ -34,13 +34,13 @@ def img_preprocess(img: np.ndarray, showImg: bool):
 def jong(img: np.ndarray, feature: str):
 	# ret3, thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 
-	thresh = img_preprocess(img, showImg=True)
+	thresh = img_preprocess(img, showImg=False)
 
 	# Identify how many possible circles there are based on contour filtering
 	_, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 	if feature == 'circles':
-		success, output, circles = detect_circles(thresh, contours)
+		success, output, circles = detect_circles(thresh, contours, showImg=False)
 
 		if success:
 			print(evaluate_circle( output, circles[0:2] ))
@@ -48,7 +48,7 @@ def jong(img: np.ndarray, feature: str):
 			print('No', feature, 'found :(')
 
 	elif feature == 'lines':
-		success, output, circles = detect_lines(thresh, contours)
+		success, output, circles = detect_lines(thresh, contours, showImg=False)
 
 		if success:
 			cv2.imshow('Output', output)
@@ -63,11 +63,11 @@ def jong(img: np.ndarray, feature: str):
 	cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-	feature = 'circles'
-	# feature = 'lines'
+	# feature = 'circles'
+	feature = 'lines'
 	# Load an color image in grayscale
-	img = cv2.imread('./sample_circles/12.jpg', 0)
-	# img = cv2.imread('./sample_lines/5.jpg', 0)
+	# img = cv2.imread('./sample_circles/12.jpg', 0)
+	img = cv2.imread('./sample_lines/5.jpg', 0)
 
 	# for i in range(1,6):
 	# 	img = cv2.imread('./sample_lines/' + str(i) + '.jpg', 0)

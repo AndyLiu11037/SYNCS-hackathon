@@ -77,9 +77,13 @@ def evaluate_circle(image, centre):
 
 # Output:
 # angle (float)
-def evaluate_lines(l1, l2):
-    coords1, coords2 = np.argwhere(l1), np.argwhere(l2)
-    m1 = np.polyfit(coords1[:,0],coords1[:,1],1)[0]
-    m2 = np.polyfit(coords2[:,0],coords2[:,1],1)[0]
-    angle = np.rad2deg(np.arctan(abs(m1-m2)/(1+m1*m2)))
-    return int(10*angle)/10
+def evaluate_lines(line_array):
+    min_angle = np.inf
+    coords = [np.argwhere(l) for l in line_array]
+    gradients = [np.polyfit(c[:,0],c[:,1],1)[0] for c in coords]
+    n = len(gradients)
+    for i in range(n):
+        for j in range(i+1,n):
+            min_angle = min(min_angle, 
+                            np.rad2deg(np.arctan(abs(gradients[i]-gradients[j])/(1+gradients[i]*gradients[j]))))
+    return int(10*min_angle)/10
