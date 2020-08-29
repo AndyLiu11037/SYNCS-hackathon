@@ -75,6 +75,7 @@ def evaluate_circle(image, centre):
     plt.savefig(buf, bbox_inches='tight')
     buf.seek(0)
     image = Image.open(buf)
+    print(image)
     plt.close()
     return score, image
 
