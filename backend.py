@@ -58,7 +58,7 @@ def backend(img: np.ndarray, feature: str):
 	# Identify how many possible circles there are based on contour filtering
 	_, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-	if feature == 'circles':
+	if feature == 'Circle':
 		success, output, circles = detect_circles(thresh, contours, showImg=False)
 
 		if success:
@@ -85,7 +85,7 @@ def backend(img: np.ndarray, feature: str):
 	
 
 	cv2.destroyAllWindows()
-	return score,image
+	return score, image
 
 if __name__ == '__main__':
 	feature = 'circles'
