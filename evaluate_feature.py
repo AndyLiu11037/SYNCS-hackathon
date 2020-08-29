@@ -77,7 +77,7 @@ def evaluate_circle(image, centre):
     #image = Image.open(buf)
     #print(image)
     plt.close()
-    return score, image
+    return score, buf
     
 
 # Inputs:
