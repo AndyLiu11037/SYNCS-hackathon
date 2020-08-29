@@ -44,9 +44,10 @@ def jong(img: np.ndarray, feature: str):
 		success, output, circles = detect_circles(thresh, contours, showImg=False)
 
 		if success:
-			score,figure = evaluate_circle( output, circles[0:2] )
+			score,figure = evaluate_circle( output, circles[0:2])
 			print(score)
-			
+			print(str(figure))
+
 		else: 
 			print('No', feature, 'found :(')
 

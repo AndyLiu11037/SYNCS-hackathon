@@ -43,7 +43,7 @@ def detect_circles(thresh: np.ndarray, contours, showImg: bool):
 			# cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
 		
 		# show the output image
-		print(avg)
+		#print(avg)
 		cv2.circle(markup, (avg[0], avg[1]), avg[2], ( 0, 0, 255), 4)
 		# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
 		# cv2.waitKey(0)
