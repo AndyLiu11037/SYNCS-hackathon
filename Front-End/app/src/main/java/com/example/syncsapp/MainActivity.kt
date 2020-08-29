@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +27,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openLeaderboard() {
-        val intent = Intent(this, LeaderboardActivity::class.java);
-        startActivity(intent);
+        //val intent = Intent(this, LeaderboardActivity::class.java);
+        //startActivity(intent);
+        val url = "https://australia-southeast1-syncs-hackathon.cloudfunctions.net/detect"
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                textView.text = "Response: %s".format(response.toString())
+            },
+            { error ->
+                // TODO: Handle error
+            }
+        )
+
     }
 }
