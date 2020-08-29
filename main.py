@@ -16,7 +16,7 @@ def detect(request):
 
     pilImage = Image.open(io.BytesIO(img))
     npImage = np.array(pilImage)
-    img = cv2.cv.fromarray(npImage)
+    img = Image.fromarray(npImage)
     score, image = jong(img, shape)
     encoded_image = base64.b64encode(image.tobytes())
 
