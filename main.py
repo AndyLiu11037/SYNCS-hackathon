@@ -6,6 +6,7 @@ import io
 import numpy as np
 import json
 def detect(request):
+    ENCODING = 'utf-8'
     feature = 'circles'
     request_json = request.get_json()
     print(request_json)
@@ -21,8 +22,10 @@ def detect(request):
     score, image = backend(npImage, shape)
     encoded_image = base64.b64encode(image.getvalue())
     print(encoded_image)
+    base64_string = encoded_image.decode(ENCODING)
     status = 200
-    body = json.dumps({"score": score, "image": str(encoded_image)})
+    print(str(score))
+    body = json.dumps({"score": str(score), "image": base64_string})
     return make_response(body,status)
     if request.args and 'message' in request.args:
         return request.args.get('message')
