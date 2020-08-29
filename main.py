@@ -18,8 +18,8 @@ def detect(request):
     npImage = np.array(pilImage)
     img = Image.fromarray(npImage)
     score, image = backend(npImage, shape)
-    encoded_image = base64.b64encode(image.read())
-
+    encoded_image = base64.b64encode(image.getvalue())
+    print(encoded_image)
     if request.args and 'message' in request.args:
         return request.args.get('message')
     elif request_json and 'message' in request_json:
