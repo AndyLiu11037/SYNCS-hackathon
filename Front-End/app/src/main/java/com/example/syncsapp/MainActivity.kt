@@ -34,12 +34,12 @@ class MainActivity : AppCompatActivity() {
         //val intent = Intent(this, LeaderboardActivity::class.java);
         //startActivity(intent);
         val queue = Volley.newRequestQueue(this)
-    //https://australia-southeast1-syncs-hackathon.cloudfunctions.net/detect
-        val url = "https://www.google.com/"
+        val url = "https://australia-southeast1-syncs-hackathon.cloudfunctions.net/detect"
         val textView = findViewById<TextView>(R.id.textView)
+
         val stringRequest = StringRequest(Request.Method.GET, url,
             { response ->
-                textView.text = "Response is: ${response.substring(0,500)}"
+                textView.text = "Response is:"
             },
             { textView.text = "Bad" })
 
