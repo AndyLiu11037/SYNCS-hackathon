@@ -1,14 +1,11 @@
 import cv2
 import numpy as np
-import argparse
 
-from evaluate_circle import evaluate_circle
+from evaluate_feature import *
+from detect_feature import *
 
-def jong():
-	# Load an color image in grayscale
-	img = cv2.imread('./sample_images/10.jpg', 0)
-	# img = cv2.imread('./sample_lines/1.jpg', 0)
-
+def img_preprocess(img: np.ndarray, showImg: bool):
+	#####	Resize the image for faster processing and to fit on screen   #####
 	height, width = img.shape[:2]
 	lim_dim = 550
 
@@ -27,93 +24,52 @@ def jong():
 	thresh = cv2.dilate(thresh, dilKernel, 2)
 	eroKernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
 	thresh = cv2.erode(thresh, eroKernel, 1)
+	
+	if showImg:
+		cv2.imshow('Orig, Blurred, Thresh', cv2.hconcat([img, blur, thresh]) )
+		cv2.waitKey(0)
+	return thresh
 
+# Should take input from front end - an image and a feature type (string)
+def jong(img: np.ndarray, feature: str):
 	# ret3, thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
 
-	# cv2.imshow('Image', cv2.hconcat([img, blur, thresh]) )
-	# cv2.waitKey(0)
-
-	markup = thresh.copy()
-	markup = cv2.cvtColor(markup, cv2.COLOR_GRAY2BGR)
+	thresh = img_preprocess(img, showImg=True)
 
 	# Identify how many possible circles there are based on contour filtering
 	_, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-	# for i in range(0, len(contours)): 
-	# 	contour = contours[i]
-	# 	# Check circular: 
-	# 	(x,y), rad = cv2.minEnclosingCircle( contour )
-	# 	circArea = np.pi*rad**2
-	# 	contArea = cv2.contourArea( contour )
-	# 	perim = cv2.arcLength(contour, True)
-	# 	cv2.drawContours(output, contours, i, (0,255,100), 3)
-	# 	print(circArea, contArea, perim)
-	# 	if abs( (circArea-contArea) ) / circArea < 0.2:
-	# 		print("yes")
+	if feature == 'circles':
+		success, output, circles = detect_circles(thresh, contours)
 
-	# 	cv2.imshow('image', output)
-	# 	cv2.waitKey(0)
+		if success:
+			print(evaluate_circle( output, circles[0:2] ))
+		else: 
+			print('No', str('circle'), 'found :(')
 
-	# Apply circular hough transform to find candidate circles. 
-	circles = cv2.HoughCircles( thresh, cv2.HOUGH_GRADIENT, 2.2, 20, 100, 100)#, minRadius=20, maxRadius=100 )
-	# print(circles)
-	try:
-	# if circles is not None:
-	# 	# Check if null circle result (no circles found)
-	# 	if len( circles.shape ) > 1:
-		avg = np.round( np.average(circles, axis=1)[0] ).astype("int")
-		# convert the (x, y) coordinates and radius of the circles to integers
-		circles = np.round(circles[0, :]).astype("int")
+	elif feature == 'lines':
+		success, output, circles = detect_lines(thresh, contours)
 
-		# loop over the (x, y) coordinates and radius of the circles
-		for (x, y, r) in circles:
-			# draw the circle in the output image, then draw a rectangle
-			# corresponding to the center of the circle
-			red = int(10*(x%20))
-			green = int(255-20*(y%20))
-			# print(red,green)
-			# cv2.circle(output, (x, y), r, ( red, green, 0), 4)
-			# cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
-		
-		# show the output image
-		print(avg)
-		cv2.circle(markup, (avg[0], avg[1]), avg[2], ( 0, 0, 255), 4)
-		# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
-		# cv2.waitKey(0)
+		if success:
+			print(evaluate_circle( output, circles[0:2] ))
+		else: 
+			print('No', str('circle'), 'found :(')
 
-		# Find the closest contour
-		minDist = 999
-		circContour = 0
-		for contour in contours: 
-			(x,y), rad = cv2.minEnclosingCircle( contour )
-			currDist = np.sqrt( (x-avg[0])**2 + (y-avg[1])**2 )	# Euclidean distance
-			if currDist < minDist:
-				minDist = currDist
-				circContour = contour
-				encCircle = [(int(x), int(y)), int(rad)]
-
-		# Create a annulus mask with min enclosing circle to extract the true circle. 
-		# Bitwise AND to extract. Magic number for annulus centre. 
-		mask = thresh * 0
-		cv2.circle(mask, encCircle[0], encCircle[1], 255, -1)
-		cv2.circle(mask, encCircle[0], int(encCircle[1]/2), 0, -1)
-		output = cv2.bitwise_and(mask, thresh)
-		# cv2.imshow( "maskk", np.hstack([mask, output]) )
-		# cv2.waitKey(0)
-
-		# Show markup of closest contour to found circle and avg hough circle.
-		cv2.drawContours(markup, [circContour], 0, (100,255,100), 3)
-		# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
-		# cv2.waitKey(0)
-
-		# cv2.imwrite('Output.png', output)
-
-		print(evaluate_circle( output, avg[0:2] ))
-
-	except: 
-		print("No valid circle found :(")
+	else: 
+		print('Unknown feature requested...')
+	
 
 	cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-	jong()
+	# feature = 'circles'
+	feature = 'lines'
+	# Load an color image in grayscale
+	img = cv2.imread('./sample_circles/10.jpg', 0)
+	# img = cv2.imread('./sample_lines/1.jpg', 0)
+
+	for i in range(1,6):
+		img = cv2.imread('./sample_lines/' + str(i) + '.jpg', 0)
+		img_preprocess(img, showImg=True)
+
+	jong(img, feature)
