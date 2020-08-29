@@ -68,9 +68,10 @@ def evaluate_circle(image, centre):
             if np.linalg.norm(vector)/new_radius > 0.03:
                 plt.arrow(draw_point[1], draw_point[0], vector[1]*3,vector[0]*3, head_width=7, head_length=11, fc='r', ec='k')
     plt.axis('off')
-    plt.savefig('overlay.png', bbox_inches='tight')
+    overlay = plt.figure()
+    #plt.savefig(overlay, bbox_inches='tight')
     plt.close()
-    return score
+    return score, overlay
 
 # Inputs:
 # l1,l2 (2d array-likes): Will consider all non-zero entries in array as part of respective line
