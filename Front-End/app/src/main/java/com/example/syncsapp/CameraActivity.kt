@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_camera.*
 import java.io.File
 
@@ -25,7 +27,8 @@ class CameraActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
 
-        val takePicButton = findViewById<Button>(R.id.takePicture)
+        val takePicButton = findViewById<Button>(R.id.takePicture);
+
         takePicButton.setOnClickListener {
             val openCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             photoFile = getPhotoFile(FILE_NAME);
@@ -39,6 +42,9 @@ class CameraActivity : AppCompatActivity(){
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show();
             }
         }
+        val requestQueue = Volley.newRequestQueue(this);
+        val objectRequest = JsonObjectRequest()
+
     }
 
     private fun getPhotoFile(fileName: String): File {
