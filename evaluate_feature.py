@@ -15,6 +15,7 @@ import base64
 
 # Outputs:
 # (int) score from 0 to 100
+
 def evaluate_circle(image, centre):
     
     # Evaluation
@@ -54,7 +55,16 @@ def evaluate_circle(image, centre):
     # Arrows
     coord_set = set(tuple(x) for x in np.argwhere(new_img).tolist())
     fig, ax = plt.subplots(figsize = (8,8))
-    plt.imshow(new_img ==0 , 'gray')
+
+    
+    layers = []
+    new_img = new_img != 0
+    for x in [(43,255), (45,231), (66,136)]:
+        a = np.where(new_img==0, x[0], new_img)
+        b = np.where(a==1, x[1],a)
+        layers.append(b)
+    img_col = np.stack(layers)
+    plt.imshow(img_col.transpose((1,2,0)))
     for phi in np.linspace(0, 2*np.pi, 60, endpoint = False):
         circle_point = new_radius*np.cos(phi) + new_centre[0], new_radius*np.sin(phi) + new_centre[1]
         dx,dy = 0.5*np.cos(phi), 0.5*np.sin(phi)
@@ -69,17 +79,17 @@ def evaluate_circle(image, centre):
             draw_point = np.mean(np.array(intersections), axis = 0)
             vector = (circle_point - draw_point)
             if np.linalg.norm(vector)/new_radius > 0.03:
-                plt.arrow(draw_point[1], draw_point[0], vector[1]*3,vector[0]*3, head_width=7, head_length=11, fc='r', ec='k')
+                plt.arrow(draw_point[1], draw_point[0], vector[1]*3,vector[0]*3, width= 2,head_width=7, head_length=11, fc='w', ec='w')
     plt.axis('off')
     #overlay = plt.figure()
     buf = io.BytesIO()
     plt.savefig(buf, bbox_inches='tight')
+    # plt.savefig('Output.png', bbox_inches='tight')
     buf.seek(0)
     #image = Image.open(buf)
     #print(image)
     plt.close()
     return score, buf
-    
 
 # Inputs:
 # lineArray (list of 2d array-likes): Individual masks of found lines
