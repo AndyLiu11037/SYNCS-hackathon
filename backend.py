@@ -36,6 +36,7 @@ def jong(img: np.ndarray, feature: str):
 
 	thresh = img_preprocess(img, showImg=False)
 
+
 	# Identify how many possible circles there are based on contour filtering
 	_, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
