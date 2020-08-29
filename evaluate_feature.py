@@ -1,9 +1,10 @@
+# SYNCS Hackathon 2020
+# jadaj - Circular
+
 import numpy as np
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 import cv2
-
-# Evaluate Circle
 
 # Inputs:
 # image (2d array-like): Will consider all non-zero entries in array as part of circle
@@ -11,7 +12,6 @@ import cv2
 
 # Outputs:
 # (int) score from 0 to 100
-
 def evaluate_circle(image, centre):
     
     # Evaluation
@@ -76,7 +76,7 @@ def evaluate_circle(image, centre):
 # l1,l2 (2d array-likes): Will consider all non-zero entries in array as part of respective line
 
 # Output:
-# angle (float)
+# angle from parallel (float)
 def evaluate_lines(line_array):
     min_angle = np.inf
     coords = [np.argwhere(l) for l in line_array]
@@ -86,4 +86,4 @@ def evaluate_lines(line_array):
         for j in range(i+1,n):
             min_angle = min(min_angle, 
                             np.rad2deg(np.arctan(abs(gradients[i]-gradients[j])/(1+gradients[i]*gradients[j]))))
-    return int(10*min_angle)/10
+    return int(100*min_angle)/100
