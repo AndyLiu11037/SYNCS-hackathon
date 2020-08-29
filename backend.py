@@ -33,15 +33,16 @@ def img_preprocess(img: np.ndarray, showImg: bool):
 # Should take input from front end - an image and a feature type (string)
 def jong(img: np.ndarray, feature: str):
 	# ret3, thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-
+	print("1")
 	thresh = img_preprocess(img, showImg=True)
 
 	# Identify how many possible circles there are based on contour filtering
 	_, contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 	if feature == 'circles':
+		print("2")
 		success, output, circles = detect_circles(thresh, contours)
-
+		print("3")
 		if success:
 			print(evaluate_circle( output, circles[0:2] ))
 		else: 
