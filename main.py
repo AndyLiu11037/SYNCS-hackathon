@@ -25,7 +25,9 @@ def detect(request):
         "score": score,
         "image": encoded_image
     }
-    return json.dumps(dic)
+    status = 200
+    body = json.dumps(dic)
+    return make_response(body,status)
     if request.args and 'message' in request.args:
         return request.args.get('message')
     elif request_json and 'message' in request_json:
