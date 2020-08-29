@@ -4,11 +4,15 @@ import base64
 def detect(request):
     feature = 'circles'
     request_json = request.get_json()
-    img = base64.b64decode(request_json['image'])
-    shape = request.json['shape']
+    try:
+        img = base64.b64decode(request_json['image'])
+        shape = request.json['shape']
+    except:
+        return f'jong World!'
+
 
     img = cv2.imread(img, 0)
-    score, image = jong(img, feature)
+    score, image = jong(img, shape)
     encoded_image = base64.b64encode(image.tobytes())
 
     if request.args and 'message' in request.args:
