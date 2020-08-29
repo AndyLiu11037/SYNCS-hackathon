@@ -68,6 +68,7 @@ def backend(img: np.ndarray, feature: str):
 			# cv2.waitKey(0)
 		else: 
 			print('No', feature, 'found :(')
+			return -1000,0
 
 	elif feature == 'parallel':
 		success, output, lines = detect_lines(thresh, contours, showImg=False)

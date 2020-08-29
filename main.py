@@ -17,9 +17,14 @@ def detect(request):
         return f'jong World!'
 
     pilImage = Image.open(io.BytesIO(img))
+    my_string = ""
+    with open("./sample_circles/comp.jpg", "rb") as img_file:
+        my_string = base64.b64encode(img_file.read())
     npImage = np.array(pilImage)
     img = Image.fromarray(npImage)
     score, image = backend(npImage, shape)
+    if score == -1000:
+        return (200,my_string.decode('utf-8'))
     encoded_image = base64.b64encode(image.getvalue())
     print(encoded_image)
     base64_string = encoded_image.decode(ENCODING)
