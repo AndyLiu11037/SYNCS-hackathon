@@ -17,7 +17,7 @@ def detect(request):
     pilImage = Image.open(io.BytesIO(img))
     npImage = np.array(pilImage)
     img = Image.fromarray(npImage)
-    score, image = jong(npImage, shape)
+    score, image = jong(pilImage, shape)
     encoded_image = base64.b64encode(image.tobytes())
 
     if request.args and 'message' in request.args:
