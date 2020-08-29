@@ -2,7 +2,7 @@ from backend import jong
 import cv2
 import base64
 from PIL import Image
-from io import StringIO
+import io
 import numpy as np
 import cv2
 def detect(request):
@@ -14,7 +14,7 @@ def detect(request):
     except:
         return f'jong World!'
 
-    pilImage = Image.open(StringIO(img))
+    pilImage = Image.open(io.BytesIO(img))
     npImage = np.array(pilImage)
     img = cv2.fromarray(npImage)
     score, image = jong(img, shape)
