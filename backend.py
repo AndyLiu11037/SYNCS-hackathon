@@ -69,7 +69,7 @@ def backend(img: np.ndarray, feature: str):
 		else: 
 			print('No', feature, 'found :(')
 
-	elif feature == 'lines':
+	elif feature == 'parallel':
 		success, output, lines = detect_lines(thresh, contours, showImg=False)
 
 		if success:

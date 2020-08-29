@@ -4,6 +4,7 @@ import base64
 from PIL import Image
 import io
 import numpy as np
+import json
 def detect(request):
     feature = 'circles'
     request_json = request.get_json()
@@ -20,6 +21,11 @@ def detect(request):
     score, image = backend(npImage, shape)
     encoded_image = base64.b64encode(image.getvalue())
     print(encoded_image)
+    dic = {
+        "score": score,
+        "image": encoded_image
+    }
+    return json.dumps(dic)
     if request.args and 'message' in request.args:
         return request.args.get('message')
     elif request_json and 'message' in request_json:
