@@ -7,6 +7,7 @@ import statsmodels.api as sm
 import cv2
 from PIL import Image
 import io
+import base64
 
 # Inputs:
 # image (2d array-like): Will consider all non-zero entries in array as part of circle
@@ -81,17 +82,29 @@ def evaluate_circle(image, centre):
     
 
 # Inputs:
-# l1,l2 (2d array-likes): Will consider all non-zero entries in array as part of respective line
+# lineArray (list of 2d array-likes): Individual masks of found lines
+# lineMask (2d array-likes): Compiled mask of found lines
 
 # Output:
 # angle from parallel (float)
-def evaluate_lines(line_array):
+def evaluate_lines(lineArray, lineMask):
     min_angle = np.inf
-    coords = [np.argwhere(l) for l in line_array]
+    coords = [np.argwhere(l) for l in lineArray]
     gradients = [np.polyfit(c[:,0],c[:,1],1)[0] for c in coords]
     n = len(gradients)
     for i in range(n):
         for j in range(i+1,n):
             min_angle = min(min_angle, 
                             np.rad2deg(np.arctan(abs(gradients[i]-gradients[j])/(1+gradients[i]*gradients[j]))))
-    return int(100*min_angle)/100
+    
+    score = int(100*min_angle)/100
+
+    # my_string = base64.b64encode(img_file.read())
+    # buf = io.BytesIO()
+    # plt.savefig(buf, bbox_inches='tight')
+    # buf.seek(0)
+    # #image = Image.open(buf)
+    # #print(image)
+    # plt.close()
+    # return score, buf
+    return score
