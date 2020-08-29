@@ -12,16 +12,17 @@ import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONObject
 import kotlinx.android.synthetic.main.activity_camera.*
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.io.File
 
@@ -105,6 +106,12 @@ class CameraActivity : AppCompatActivity(){
                     error ->
                     Log.d("CAMERA","error: ${error.message}")
                 }
+            )
+
+            request.retryPolicy = DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
             )
 
             val queue = Volley.newRequestQueue(this);
