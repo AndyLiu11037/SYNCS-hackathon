@@ -12,16 +12,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_camera.*
+import org.json.JSONObject
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 private const val REQUEST_CODE = 42;
 private const val FILE_NAME = "PHOTO.jpeg";
+private const val URL = ;
 private lateinit var photoFile : File;
 
 class CameraActivity : AppCompatActivity(){
+
+    private var currButton : Button? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +49,6 @@ class CameraActivity : AppCompatActivity(){
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show();
             }
         }
-        val requestQueue = Volley.newRequestQueue(this);
-        val objectRequest = JsonObjectRequest()
-
     }
 
     private fun getPhotoFile(fileName: String): File {
@@ -56,7 +60,15 @@ class CameraActivity : AppCompatActivity(){
         if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath);
             imageView.setImageBitmap(takenImage);
+
+            val baos = ByteArrayOutputStream();
+            takenImage.compress();
             imageView.visibility = View.VISIBLE;
+            var jsonObj = JSONObject();
+            jsonObj.put("name", "value");
+            jsonObj.put("shape", "watever button");
+            "$URL/square"
+
         }else{
             super.onActivityResult(requestCode, resultCode, data);
         }
