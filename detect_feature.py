@@ -73,7 +73,7 @@ def detect_circles(thresh: np.ndarray, contours):
 		# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
 		# cv2.waitKey(0)
 
-		# cv2.imwrite('Output.png', output)
+		cv2.imwrite('Output.png', output)
 
 		success = True
 
@@ -88,65 +88,21 @@ def detect_lines(thresh: np.ndarray, contours):
 	markup = thresh.copy()
 	markup = cv2.cvtColor(markup, cv2.COLOR_GRAY2BGR)
 
+	# Edge detection as prereq for hough lines
+	edges = cv2.Canny(thresh, 50, 150, apertureSize = 3)
+
+
 	# Apply linear hough transform to find candidate circles. 
-	circles = cv2.HoughCircles( thresh, cv2.HOUGH_GRADIENT, 2.2, 20, 100, 100)#, minRadius=20, maxRadius=100 )
-	# print(circles)
-	try:
-	# if circles is not None:
-	# 	# Check if null circle result (no circles found)
-	# 	if len( circles.shape ) > 1:
-		avg = np.round( np.average(circles, axis=1)[0] ).astype("int")
-		# convert the (x, y) coordinates and radius of the circles to integers
-		circles = np.round(circles[0, :]).astype("int")
+	lines = cv2.HoughLinesP(edges, rho=1, theta=np.pi/360, threshold=50, minLineLength=100, maxLineGap=20)
+	print(lines)
+	for x1,y1,x2,y2 in lines[0]:
+		cv2.line(markup, (x1,y1), (x2,y2), (0,255,0), 2)
 
-		# loop over the (x, y) coordinates and radius of the circles
-		for (x, y, r) in circles:
-			# draw the circle in the output image, then draw a rectangle
-			# corresponding to the center of the circle
-			red = int(10*(x%20))
-			green = int(255-20*(y%20))
-			# print(red,green)
-			# cv2.circle(output, (x, y), r, ( red, green, 0), 4)
-			# cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
-		
-		# show the output image
-		print(avg)
-		cv2.circle(markup, (avg[0], avg[1]), avg[2], ( 0, 0, 255), 4)
-		# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
-		# cv2.waitKey(0)
+	cv2.imshow( 'Edges, output', np.hstack( [cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR), markup] ) )
+	cv2.waitKey(0)
 
-		# Find the closest contour
-		minDist = 999
-		circContour = 0
-		for contour in contours: 
-			(x,y), rad = cv2.minEnclosingCircle( contour )
-			currDist = np.sqrt( (x-avg[0])**2 + (y-avg[1])**2 )	# Euclidean distance
-			if currDist < minDist:
-				minDist = currDist
-				circContour = contour
-				encCircle = [(int(x), int(y)), int(rad)]
-
-		# Create a annulus mask with min enclosing circle to extract the true circle. 
-		# Bitwise AND to extract. Magic number for annulus centre. 
-		mask = thresh * 0
-		cv2.circle(mask, encCircle[0], encCircle[1], 255, -1)
-		cv2.circle(mask, encCircle[0], int(encCircle[1]/2), 0, -1)
-		output = cv2.bitwise_and(mask, thresh)
-		# cv2.imshow( "maskk", np.hstack([mask, output]) )
-		# cv2.waitKey(0)
-
-		# Show markup of closest contour to found circle and avg hough circle.
-		cv2.drawContours(markup, [circContour], 0, (100,255,100), 3)
-		# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
-		# cv2.waitKey(0)
-
-		# cv2.imwrite('Output.png', output)
-
-		success = True
-
-	except: 
-		success = False
-		output = thresh
-		avg = [0, 0, 0]
+	output = markup
+	avg = [0,0,0]
+	success = True
 
 	return [success, output, avg]

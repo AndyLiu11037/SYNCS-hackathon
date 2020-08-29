@@ -45,15 +45,16 @@ def jong(img: np.ndarray, feature: str):
 		if success:
 			print(evaluate_circle( output, circles[0:2] ))
 		else: 
-			print('No', str('circle'), 'found :(')
+			print('No', feature, 'found :(')
 
 	elif feature == 'lines':
 		success, output, circles = detect_lines(thresh, contours)
 
 		if success:
-			print(evaluate_circle( output, circles[0:2] ))
+			cv2.imshow('Output', output)
+			cv2.waitKey(0)
 		else: 
-			print('No', str('circle'), 'found :(')
+			print('No', feature, 'found :(')
 
 	else: 
 		print('Unknown feature requested...')
@@ -62,14 +63,14 @@ def jong(img: np.ndarray, feature: str):
 	cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-	# feature = 'circles'
-	feature = 'lines'
+	feature = 'circles'
+	# feature = 'lines'
 	# Load an color image in grayscale
-	img = cv2.imread('./sample_circles/10.jpg', 0)
-	# img = cv2.imread('./sample_lines/1.jpg', 0)
+	img = cv2.imread('./sample_circles/12.jpg', 0)
+	# img = cv2.imread('./sample_lines/5.jpg', 0)
 
-	for i in range(1,6):
-		img = cv2.imread('./sample_lines/' + str(i) + '.jpg', 0)
-		img_preprocess(img, showImg=True)
+	# for i in range(1,6):
+	# 	img = cv2.imread('./sample_lines/' + str(i) + '.jpg', 0)
+	# 	img_preprocess(img, showImg=True)
 
 	jong(img, feature)
