@@ -22,7 +22,7 @@ def detect(request):
     encoded_image = base64.b64encode(image.getvalue())
     print(encoded_image)
     status = 200
-    body = json.dumps({"score": score, "image": encoded_image})
+    body = json.dumps({"score": score, "image": str(encoded_image)})
     return make_response(body,status)
     if request.args and 'message' in request.args:
         return request.args.get('message')
