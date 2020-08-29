@@ -1,5 +1,5 @@
 from backend import jong
-def detect(response):
+def detect(request):
     jong()
     request_json = request.get_json()
     if request.args and 'message' in request.args:
