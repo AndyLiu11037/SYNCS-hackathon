@@ -1,3 +1,3 @@
 from backend import jong
-def detect():
+def detect(response):
     jong()
