@@ -4,10 +4,10 @@ import argparse
 
 from evaluate_circle import evaluate_circle
 
-# Load an color image in grayscale
-# img = cv2.imread('./sample_images/10.jpg', 0)
 def jong():
-	img = cv2.imread('./sample_lines/1.jpg', 0)
+	# Load an color image in grayscale
+	img = cv2.imread('./sample_images/10.jpg', 0)
+	# img = cv2.imread('./sample_lines/1.jpg', 0)
 
 	height, width = img.shape[:2]
 	lim_dim = 550
@@ -57,33 +57,30 @@ def jong():
 	# Apply circular hough transform to find candidate circles. 
 	circles = cv2.HoughCircles( thresh, cv2.HOUGH_GRADIENT, 2.2, 20, 100, 100)#, minRadius=20, maxRadius=100 )
 	# print(circles)
-	if circles is not None:
-		# Check if null circle result (no circles found)
-		if len( circles.shape ) > 1:
-			avg = np.round( np.average(circles, axis=1)[0] ).astype("int")
-			# convert the (x, y) coordinates and radius of the circles to integers
-			circles = np.round(circles[0, :]).astype("int")
+	try:
+	# if circles is not None:
+	# 	# Check if null circle result (no circles found)
+	# 	if len( circles.shape ) > 1:
+		avg = np.round( np.average(circles, axis=1)[0] ).astype("int")
+		# convert the (x, y) coordinates and radius of the circles to integers
+		circles = np.round(circles[0, :]).astype("int")
 
-			# loop over the (x, y) coordinates and radius of the circles
-			for (x, y, r) in circles:
-				# draw the circle in the output image, then draw a rectangle
-				# corresponding to the center of the circle
-				red = int(10*(x%20))
-				green = int(255-20*(y%20))
-				# print(red,green)
-				# cv2.circle(output, (x, y), r, ( red, green, 0), 4)
-				# cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
-			
-			# show the output image
-			print(avg)
-			cv2.circle(markup, (avg[0], avg[1]), avg[2], ( 0, 0, 255), 4)
-			# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
-			# cv2.waitKey(0)
+		# loop over the (x, y) coordinates and radius of the circles
+		for (x, y, r) in circles:
+			# draw the circle in the output image, then draw a rectangle
+			# corresponding to the center of the circle
+			red = int(10*(x%20))
+			green = int(255-20*(y%20))
+			# print(red,green)
+			# cv2.circle(output, (x, y), r, ( red, green, 0), 4)
+			# cv2.rectangle(output, (x - 5, y - 5), (x + 5, y + 5), (0, 128, 255), -1)
+		
+		# show the output image
+		print(avg)
+		cv2.circle(markup, (avg[0], avg[1]), avg[2], ( 0, 0, 255), 4)
+		# cv2.imshow("output", np.hstack([cv2.cvtColor(thresh, cv2.COLOR_GRAY2BGR), markup]))
+		# cv2.waitKey(0)
 
-		else: 
-			print("No valid circle found :(")
-
-	if len(avg) == 3:
 		# Find the closest contour
 		minDist = 999
 		circContour = 0
@@ -113,4 +110,10 @@ def jong():
 
 		print(evaluate_circle( output, avg[0:2] ))
 
+	except: 
+		print("No valid circle found :(")
+
 	cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+	jong()
