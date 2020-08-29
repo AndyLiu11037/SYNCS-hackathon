@@ -26,7 +26,7 @@ def detect(request):
     status = 200
     print(str(score))
     body = json.dumps({"score": str(score), "image": base64_string})
-    return make_response(body,status)
+    return (body,status)
     if request.args and 'message' in request.args:
         return request.args.get('message')
     elif request_json and 'message' in request_json:
