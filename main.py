@@ -21,12 +21,8 @@ def detect(request):
     score, image = backend(npImage, shape)
     encoded_image = base64.b64encode(image.getvalue())
     print(encoded_image)
-    dic = {
-        "score": score,
-        "image": encoded_image
-    }
     status = 200
-    body = json.dumps(dic)
+    body = json.dumps({"score": score, "image": encoded_image})
     return make_response(body,status)
     if request.args and 'message' in request.args:
         return request.args.get('message')
