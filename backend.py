@@ -77,7 +77,9 @@ def backend(img: np.ndarray, feature: str):
 			# for mask in lines:
 			# 	cv2.imshow('Output of detection', mask)
 			# 	cv2.waitKey(0)
-			print(evaluate_lines( lines ))
+			score = evaluate_lines( lines ) 
+			image = "no"
+			return score,image
 		else: 
 			print('No', feature, 'found :(')
 

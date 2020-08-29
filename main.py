@@ -23,6 +23,8 @@ def detect(request):
     npImage = np.array(pilImage)
     img = Image.fromarray(npImage)
     score, image = backend(npImage, shape)
+    if image == "no":
+        return(200,{"score": str(score)})
     if score == -1000:
         return (200,my_string.decode('utf-8'))
     encoded_image = base64.b64encode(image.getvalue())
