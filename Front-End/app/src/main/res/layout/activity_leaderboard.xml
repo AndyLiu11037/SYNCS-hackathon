@@ -7,6 +7,58 @@
     android:background="#2B2D42"
     tools:context=".LeaderboardActivity" >
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:text="LEADERBOARDS"
+        android:textColor="#F7F7F9"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <LinearLayout
+        android:id="@+id/infobar"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:weightSum="7"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="1.0">
+        <TextView
+            android:layout_width="42dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="167dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="Username"
+            android:textColor="#E86A92"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Score"
+            android:textColor="#E86A92"
+            android:textSize="20sp" />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="88dp"
@@ -14,18 +66,17 @@
         android:weightSum="7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.749">
-        >
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/tmp2"
             android:layout_width="73dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            app:srcCompat="@drawable/prof3" />
+            app:srcCompat="@drawable/prof1" />
 
         <TextView
             android:layout_width="212dp"
@@ -39,21 +90,27 @@
         <TextView
             android:layout_width="86dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="83.2%"
+            android:textColor="#F7E733"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="409dp"
         android:layout_height="88dp"
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.529">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0">
         >
 
         <ImageView
@@ -75,7 +132,12 @@
         <TextView
             android:layout_width="86dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="85.4%"
+            android:textColor="#F7E733"
+            android:textSize="25sp" />
 
     </LinearLayout>
 
@@ -87,10 +149,10 @@
         android:weightSum="7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.286">
+        app:layout_constraintVertical_bias="0.114">
         >
 
         <ImageView
@@ -98,7 +160,7 @@
             android:layout_width="73dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            app:srcCompat="@drawable/prof1" />
+            app:srcCompat="@drawable/prof3" />
 
         <TextView
             android:layout_width="212dp"
@@ -112,22 +174,13 @@
         <TextView
             android:layout_width="86dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" />
+            android:layout_weight="2"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="96.7%"
+            android:textColor="#F7E733"
+            android:textSize="25sp" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:text="LEADERBOARDS"
-        android:textColor="#F7F7F9"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
