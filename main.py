@@ -4,7 +4,6 @@ import base64
 from PIL import Image
 import io
 import numpy as np
-import cv2
 def detect(request):
     feature = 'circles'
     request_json = request.get_json()
@@ -16,7 +15,7 @@ def detect(request):
 
     pilImage = Image.open(io.BytesIO(img))
     npImage = np.array(pilImage)
-    img = cv2.fromarray(npImage)
+    img = cv2.cv.fromarray(npImage)
     score, image = jong(img, shape)
     encoded_image = base64.b64encode(image.tobytes())
 
