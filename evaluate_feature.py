@@ -74,10 +74,11 @@ def evaluate_circle(image, centre):
     buf = io.BytesIO()
     plt.savefig(buf, bbox_inches='tight')
     buf.seek(0)
-    image = Image.open(buf)
-    print(image)
+    #image = Image.open(buf)
+    #print(image)
     plt.close()
     return score, image
+    
 
 # Inputs:
 # l1,l2 (2d array-likes): Will consider all non-zero entries in array as part of respective line
