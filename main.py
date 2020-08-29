@@ -7,6 +7,7 @@ import numpy as np
 def detect(request):
     feature = 'circles'
     request_json = request.get_json()
+    print(request_json)
     try:
         img = base64.b64decode(request_json['image'])
         shape = request.json['shape']
