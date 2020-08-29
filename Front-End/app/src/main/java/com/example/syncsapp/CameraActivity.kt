@@ -1,49 +1,59 @@
 package com.example.syncsapp
 
 
-import android.graphics.SurfaceTexture
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import android.util.Log
-import android.view.TextureView
+import android.widget.Button
+import android.widget.Toast
+import androidx.core.content.FileProvider
 import kotlinx.android.synthetic.main.activity_camera.*
+import java.io.File
 
-class CameraActivity : AppCompatActivity() {
+private const val REQUEST_CODE = 42;
+private const val FILE_NAME = "PHOTO.jpeg";
+private lateinit var photoFile : File;
+
+class CameraActivity : AppCompatActivity(){
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+        setContentView(R.layout.activity_camera)
 
-    private val surfaceListener = object: TextureView.SurfaceTextureListener{
-        override fun onSurfaceTextureSizeChanged(
-            surface: SurfaceTexture?,
-            width: Int,
-            height: Int
-        ) {
+        val takePicButton = findViewById<Button>(R.id.takePicture)
+        takePicButton.setOnClickListener {
+            val openCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            photoFile = getPhotoFile(FILE_NAME);
 
-        }
+            val fileProvider = FileProvider.getUriForFile(this, "syncsapp.fileprovider", photoFile);
+            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
-        override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) = Unit
-
-        override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?) = true
-
-        override fun onSurfaceTextureAvailable(surface: SurfaceTexture?, width: Int, height: Int) {
-            Log.d("CAMERA", "textureSurface width: $width height: $height");
-            openCamera();
+            if (openCameraIntent.resolveActivity(this.packageManager) != null) {
+                startActivityForResult(openCameraIntent, REQUEST_CODE);
+            } else {
+                Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (cameraView.isAvailable) {
-            openCamera();
-        } else {
-            cameraView.surfaceTextureListener = surfaceListener;
+    private fun getPhotoFile(fileName: String): File {
+        val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return File.createTempFile(fileName,".jpg", storageDirectory);
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath);
+            imageView.setImageBitmap(takenImage);
+            imageView.visibility = View.VISIBLE;
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-    private fun openCamera() {
-
-    }
-
 }

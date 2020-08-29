@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         val playButton = findViewById<Button>(R.id.playButton);
         playButton.setOnClickListener{
             Log.d("BUTTON", "The playbutton is being clicked");
+            dispatchCameraActivityIntent();
         }
 
         val leaderboardButton = findViewById<Button>(R.id.leaderboardButton);
@@ -27,8 +28,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent);
     }
 
-    fun openCameraActivityIntent() {
-        
+    fun dispatchCameraActivityIntent() {
+        val intent = Intent(this, CameraActivity::class.java);
+        startActivity(intent);
     }
 
 }
