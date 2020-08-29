@@ -52,8 +52,9 @@ def jong(img: np.ndarray, feature: str):
 		success, output, circles = detect_lines(thresh, contours, showImg=False)
 
 		if success:
-			cv2.imshow('Output', output)
-			cv2.waitKey(0)
+			print("LINE FOUND")
+			# cv2.imshow('Output', output)
+			# cv2.waitKey(0)
 		else: 
 			print('No', feature, 'found :(')
 
