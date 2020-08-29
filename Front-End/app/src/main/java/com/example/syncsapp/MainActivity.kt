@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         val playButton = findViewById<Button>(R.id.playButton);
         playButton.setOnClickListener{
             Log.d("BUTTON", "The playbutton is being clicked");
@@ -19,12 +18,17 @@ class MainActivity : AppCompatActivity() {
 
         val leaderboardButton = findViewById<Button>(R.id.leaderboardButton);
         leaderboardButton.setOnClickListener{
-            openLeaderboard();
+            openLeaderboardIntent();
         }
     }
 
-    fun openLeaderboard() {
+    fun openLeaderboardIntent() {
         val intent = Intent(this, LeaderboardActivity::class.java);
         startActivity(intent);
     }
+
+    fun openCameraActivityIntent() {
+        
+    }
+
 }
