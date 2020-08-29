@@ -8,23 +8,62 @@
     android:orientation="vertical"
     tools:context=".CameraActivity">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="124dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:background="#2B2D42"
+        android:weightSum="9">
 
+        <Button
+            android:id="@+id/circleButton"
+            android:layout_width="59dp"
+            android:layout_height="123dp"
+            android:layout_weight="3"
+            android:background="@drawable/circletab"
+            android:backgroundTint="#E86A92"
+            android:text="Circle"
+            android:textColor="#F7F7F9" />
+
+        <Button
+            android:id="@+id/parallelButton"
+            android:layout_width="102dp"
+            android:layout_height="122dp"
+            android:layout_weight="3"
+            android:background="@drawable/parallellines"
+            android:backgroundTint="#E86A92"
+            android:text="Parallel"
+            android:textColor="#F7F7F9" />
+
+        <Button
+            android:id="@+id/rectangleButton"
+            android:layout_width="65dp"
+            android:layout_height="63dp"
+            android:layout_weight="3"
+            android:background="@drawable/rectangle"
+            android:backgroundTint="#E86A92"
+            android:text="Rectangle"
+            android:textColor="#F7F7F9" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="10dp"
         android:src="@mipmap/ic_launcher"
         android:visibility="invisible" />
 
     <Button
         android:id="@+id/takePicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="47dp"
+        android:layout_height="46dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:background="#F7EC59"
-        android:text="Take Picture" />
+        android:layout_marginTop="15dp"
+        android:background="@drawable/circletab"
+        android:backgroundTint="#F7E733" />
 
 </LinearLayout>
