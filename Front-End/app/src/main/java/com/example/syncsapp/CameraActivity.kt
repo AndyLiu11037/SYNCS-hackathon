@@ -95,11 +95,11 @@ class CameraActivity : AppCompatActivity(){
                     response ->
                     Log.d("CAMERA", "Response object is ${response.toString()}")
 
-                    val imageBytes = Base64.decode(response.get("image") as String, Base64.DEFAULT);
-                    val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size);
-                    imageView.setImageBitmap(decodedImage);
+//                    val imageBytes = Base64.decode(response.get("image") as String, Base64.DEFAULT);
+//                    val decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size);
+//                    imageView.setImageBitmap(decodedImage);
 
-//                    dispatchScoreIntent(response.get("image") as String, response.get("score") as String);
+                    dispatchScoreIntent(response.get("image") as String, response.get("score") as String);
                 },
                 Response.ErrorListener{
                     error ->
@@ -115,10 +115,10 @@ class CameraActivity : AppCompatActivity(){
         }
     }
 
-//    fun dispatchScoreIntent(base64Image: String, score: String) {
-//        val intent = Intent(this, ScoreActivity::class.java);
-//        intent.putExtra("image", base64Image);
-//        intent.putExtra("score", score);
-//        startActivity(intent);
-//    }
+    private fun dispatchScoreIntent(base64Image: String, score: String) {
+        val intent = Intent(this, ScoreActivity::class.java);
+        intent.putExtra("image", base64Image);
+        intent.putExtra("score", score);
+        startActivity(intent);
+    }
 }
